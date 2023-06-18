@@ -4,4 +4,8 @@ from .models import Booking
 def index(request):
     latest_booking_list = Booking.objects.order_by("-modification_date")[:5]
     context = {"latest_booking_list": latest_booking_list}
-    return render(request, "bookings/index.html", context)   
+    return render(request, "bookings/index.html", context) 
+
+def book(request):
+    context = {}
+    return render(request, "bookings/book.html", context) 
