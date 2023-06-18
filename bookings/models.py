@@ -123,3 +123,6 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+#    def only_timetable(self):
+#        return self.schedule.slot.split(':')[-1]        

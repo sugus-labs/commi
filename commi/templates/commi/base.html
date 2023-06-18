@@ -88,9 +88,14 @@
         --bs-btn-active-bg: #5a23c8;
         --bs-btn-active-border-color: #5a23c8;
       }
+
       .bd-mode-toggle {
         z-index: 1500;
       }
+
+    .heavy {
+      font: bold;
+    }
     </style>
 
     
@@ -185,6 +190,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Perfil</a>
         </li>
+
         <!--
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
@@ -195,13 +201,19 @@
           </ul>
         </li>
         -->
+
       </ul>
+
+      {% if user.is_authenticated %}
       <!--
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
+      <span class="navbar-text">
+      <p class="text-white">{{ user.get_username }}</p>
+      </span>
       -->
+      <form class="d-flex" role="search">
+        <a class="btn btn-danger" href="{% url 'logout' %}">Deslogueate!</a>
+      </form>
+      {% endif %}
     </div>
   </div>
 </nav>
