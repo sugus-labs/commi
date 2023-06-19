@@ -5,18 +5,18 @@ from django.contrib.auth.models import User
 from datetime import datetime, date, timedelta
 
 status_dict = {
-    "RECEIVED": "RECIBIDO",
-    "CONFIRMED": "CONFIRMADO",
+    "RECEIVED": "RESERVADO",
+    "CONFIRMED": "RESERVADO",
     "CANCELLED": "CANCELADO",
-    "ENJOYED": "DISFRUTADO",
+    "ENJOYED": "RESERVADO",
 }
 
 @login_required
 def index(request):
     #latest_booking_list = Booking.objects.order_by("-modification_date")[:5]
     today = datetime.now()
-    date_list = [today - timedelta(days = x) for x in range(14)]
-    booking_list = Booking.objects.filter(date__range = [date_list[-1], date_list[0]])
+    date_list = [today + timedelta(days = x) for x in range(14)]
+    booking_list = Booking.objects.filter(date__range = [date_list[0], date_list[-1]])
     all_dates_list = []
     for _date in date_list:
         booking_flag = False
@@ -32,11 +32,12 @@ def index(request):
                 all_dates_list.append(date_dict) 
                 booking_flag = True
         if booking_flag == False: 
+            date_dict = {}
             date_dict["booking"] = None
             date_dict["reserved"] = False
             date_dict["date"] = _date   
             all_dates_list.append(date_dict)           
-    all_dates_list.reverse()
+    #all_dates_list.reverse()
     #print(len(all_dates_list))
     context = {
         "booking_list": booking_list,
@@ -57,6 +58,7 @@ def book(request):
 #            current_user_profile.follows.remove(profile)
 #        current_user_profile.save()
 #    return render(request, "dwitter/profile.html", {"profile": profile})
-
-    context = {}
+    today = datetime.now()
+    date_list = [today + timedelta(days = x) for x in range(14)]
+    context = {"date_list": date_list}
     return render(request, "bookings/book.html", context) 

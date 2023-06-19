@@ -34,7 +34,7 @@
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
           Estado: <strong>{{element.booking.status}}</strong>.<br>
           Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
-          Recurso <strong>{{element.booking.schedule.resource}}</strong>.<br>
+          Recurso: <strong>{{element.booking.schedule.resource}}</strong>.<br>
           Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>
       {% elif element.reserved == False %}
@@ -54,7 +54,7 @@
         <p class="pb-3 mb-0 lh-sm border-bottom">
           Estado: <strong>DISPONIBLE</strong>.<br>
           Reserva: <strong>{{element.booking.small_id}}</strong><br> 
-          Recurso <strong>{{element.booking.schedule.resource}}</strong><br>
+          Recurso: <strong>{{element.booking.schedule.resource}}</strong><br>
           Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>          
       {% else %}
@@ -75,7 +75,7 @@
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
           Estado: <strong>DISPONIBLE</strong>.<br>
           Reserva: <strong>{{element.booking.small_id}}</strong><br> 
-          Recurso <strong>{{element.booking.schedule.resource}}</strong><br>
+          Recurso: <strong>{{element.booking.schedule.resource}}</strong><br>
           Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>        
       {% endif %}
