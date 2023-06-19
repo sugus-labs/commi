@@ -32,10 +32,10 @@
         </svg>
         <p class="pb-3 mb-0 lh-sm border-bottom">
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
+          Estado: <strong>{{element.booking.status}}</strong>.<br>
           Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
           Recurso <strong>{{element.booking.schedule.resource}}</strong>.<br>
-          <strong>{{element.booking.schedule.slot}}</strong>.<br>
-          Estado: <strong>{{element.booking.status}}</strong>
+          Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>
       {% elif element.reserved == False %}
         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -52,7 +52,10 @@
           </text>          
         </svg>
         <p class="pb-3 mb-0 lh-sm border-bottom">
-          <strong></strong><br>
+          Estado: <strong>DISPONIBLE</strong>.<br>
+          Reserva: <strong>{{element.booking.small_id}}</strong><br> 
+          Recurso <strong>{{element.booking.schedule.resource}}</strong><br>
+          Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>          
       {% else %}
         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -70,47 +73,12 @@
         </svg>
         <p class="pb-3 mb-0 lh-sm border-bottom">
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
-          Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
-          Recurso <strong>{{element.booking.schedule.resource}}</strong>.<br>
-          <strong>{{element.booking.schedule.slot}}</strong>.<br>
-          Estado: <strong>{{element.booking.status}}</strong>
+          Estado: <strong>DISPONIBLE</strong>.<br>
+          Reserva: <strong>{{element.booking.small_id}}</strong><br> 
+          Recurso <strong>{{element.booking.schedule.resource}}</strong><br>
+          Hor.:<strong>{{element.booking.schedule.slot}}</strong><br>
         </p>        
       {% endif %}
-    </div>
-
-    {% endfor %}
-
-
-    {% for booking in latest_booking_list %}
-
-    <div class="d-flex text-body-secondary pt-3">
-      {% if forloop.counter|divisibleby:3 %}
-        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/>
-          <text x="50%" y="33%" fill="#ffffff" dy=".3em" class="heavy">
-            18 FEB
-          </text>
-          <text x="50%" y="66%" fill="#ffffff" dy=".3em" class="heavy">
-            2023
-          </text>          
-        </svg>
-      {% elif forloop.counter|divisibleby:2 %}
-        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#e83e8c"/>
-          <text x="50%" y="50%" fill="#ffffff" dy=".3em">32x32</text></svg>
-      {% else %}
-        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#6f42c1"/>
-          <text x="50%" y="50%" fill="#ffffff" dy=".3em">32x32</text></svg>
-      {% endif %}
-      <p class="pb-3 mb-0 lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">@{{booking.user}}</strong>
-        Reserva <strong>{{booking.id}}</strong> de la <strong>{{booking.schedule.resource}}</strong> 
-        el dia: <strong>{{booking.date|date:"Y-m-d"}}</strong>.<br>
-        <strong>{{booking.schedule.slot}}</strong>
-      </p>
     </div>
 
     {% endfor %}
