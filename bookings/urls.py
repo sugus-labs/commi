@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # ex: /proposals/
     path("", views.index, name = "index"),
-    path("book", views.book, name = "book"),    
+    path("book/<str:resource_id>/<str:date>", views.book, name = "book"),    
     # ex: /proposals/5/
 #    path("<str:id>/", views.detail, name = "detail"),
     # ex: /polls/5/results/

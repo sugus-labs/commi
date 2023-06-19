@@ -24,7 +24,7 @@ admin.site.index_title = 'COMMI administration'
 admin.site.site_title = 'COMMI admin'
 
 urlpatterns = [
-    path("bookings/", include("bookings.urls")),
+    path("", include("bookings.urls")),
     path("proposals/", include("proposals.urls")),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
