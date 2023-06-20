@@ -1,0 +1,39 @@
+{% extends 'commi/base.html' %}
+
+{% block content %} 
+
+{% load i18n %}
+  <!--
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <a href="" class="btn btn-lg btn-bd-primary d-flex align-items-center justify-content-center fw-semibold">
+      Reserva ahora!
+    </a>
+  </div>
+  -->
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <!--<h5 class="border-bottom pb-2 mb-0">Calendario de reservas</h5>-->
+
+    {% for element in all_dates_list %}
+
+    <div class="d-flex text-body-secondary pt-3">
+      {% if element.reserved == "ALL" %}
+        <p class="pb-3 mb-0 lh-sm border-bottom">
+          <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
+          Fecha: <strong>{{element.date|date:"Y-m-d" }}</strong>.<br>
+          Estado: <strong>{{element.booking.status}}</strong>.<br>
+          Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
+          Recurso: <strong>{{element.booking.schedule.resource}}</strong>.<br>
+          Hor.:<strong>{{element.booking.schedule.slot}}</strong><br><br>
+          <a href="{% url 'cancel' element.booking.id %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold">
+            Cancela ahora!
+          </a>
+        </p>     
+      {% endif %}
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+  {% endblock %}

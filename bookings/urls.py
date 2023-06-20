@@ -4,7 +4,10 @@ from . import views
 urlpatterns = [
     # ex: /proposals/
     path("", views.index, name = "index"),
-    path("book/<str:resource_id>/<str:date>", views.book, name = "book"),    
+    path("manage/<str:resource_id>/<str:date>", views.manage, name = "manage"),   
+    path("book", views.book, name = "book"), 
+    path("my-bookings", views.my_bookings, name = "my-bookings"), 
+    path("cancel/<str:booking_id>", views.cancel, name = "cancel"),       
     # ex: /proposals/5/
 #    path("<str:id>/", views.detail, name = "detail"),
     # ex: /polls/5/results/

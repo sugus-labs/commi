@@ -24,7 +24,7 @@ class ScheduleAdmin(admin.ModelAdmin):
         "deletion_date"]
     fieldsets = [
         ("Information", {
-            "fields": ["resource", "slot"]}),
+            "fields": ["resource", "slot", "comments"]}),
         ("Dates", {
             "fields": [
                 "creation_date", "modification_date", 

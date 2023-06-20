@@ -104,6 +104,11 @@ class Booking(models.Model):
         choices = Status.choices,
         default = Status.RECEIVED,
         null = False, blank = False)
+    comments = models.TextField(
+        help_text = "The comments of the booking if exists",
+        verbose_name = "comments",        
+        max_length = 5000, 
+        null = True, blank = True)
     creation_date = models.DateTimeField(
         help_text = "The date of creation",
         verbose_name = "creation date",        

@@ -1,6 +1,39 @@
 {% extends "commi/base.html" %}
 
 {% block content %}
-  <p>Logged out!</p>
-  <a href="{% url 'login'%}">Click here to login again.</a>
+
+{% load i18n %}
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+    <p  class="good-center d-flex align-items-center justify-content-center fw-semibold">
+      Logueate para poder acceder.</p>
+    {% else %}
+      <br>
+      <p  class="good-center d-flex align-items-center justify-content-center fw-semibold">
+        Logueate para poder acceder.</p>
+    {% endif %}
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+        <div class="good-center d-flex align-items-center justify-content-center fw-semibold">{% language 'es-es' %}{{ form.username.label_tag }}{% endlanguage %}</div> 
+        <div class="good-center form-control form-outline mb-4">{{ form.username }}</div>
+      <br>
+        <div class="good-center d-flex align-items-center justify-content-center fw-semibold">{% language 'es-es' %}{{ form.password.label_tag }}{% endlanguage %}</div> 
+        <div class="good-center form-control form-outline mb-4">{{ form.password }}</div>
+      </br>
+    <input class="good-center btn btn-lg btn-bd-primary d-flex align-items-center justify-content-center fw-semibold" type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+
+  <!--
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  -->
+
 {% endblock %}
