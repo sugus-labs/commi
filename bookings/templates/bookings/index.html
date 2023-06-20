@@ -54,9 +54,15 @@
         </svg>
         <p class="pb-3 mb-0 lh-sm border-bottom">
           Estado: <strong>DISPONIBLE</strong>.<br>
-          <a href="{% url 'manage' 'dc4a4c07e37b4ded9f1a5c72f3bee17b' element.date|date:'Ymd' %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold" style="margin-top: 6px;">
-            Reserva ahora!
-          </a>
+          {% if element.quota == True %}
+            <a href="{% url 'manage' 'dc4a4c07e37b4ded9f1a5c72f3bee17b' element.date|date:'Ymd' %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold" style="margin-top: 6px;">
+              Reserva ahora!
+            </a>
+          {% else %}
+            <a href="{% url 'manage' 'dc4a4c07e37b4ded9f1a5c72f3bee17b' element.date|date:'Ymd' %}" class="disabled btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold" style="margin-top: 6px;">
+              Ya tienes una reserva!
+            </a>
+          {% endif %}
         </p>          
       {% else %}
         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">

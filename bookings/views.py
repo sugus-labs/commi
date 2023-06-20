@@ -16,10 +16,18 @@ status_dict = {
 def index(request):
     #latest_booking_list = Booking.objects.order_by("-modification_date")[:5]
     today = datetime.now()
-    date_list = [today + timedelta(days = x) for x in range(14)]
+    date_list = [today + timedelta(days = x) for x in range(93)]
     booking_list = Booking.objects \
         .filter(date__range = [date_list[0], date_list[-1]]) \
         .filter(Q(deletion_date__isnull = True))
+    user_id = request.user.id
+    user_booking_list = Booking.objects \
+        .filter(user_id = user_id) \
+        .filter(Q(deletion_date__isnull = True))
+    reserved_week_list = []
+    for user_booking in user_booking_list:
+        reserved_week_list.append(
+            user_booking.date.strftime("%Y%V"))
     all_dates_list = []
     for _date in date_list:
         booking_flag = False
@@ -32,17 +40,29 @@ def index(request):
                 date_dict["booking"] = booking
                 date_dict["reserved"] = "ALL"
                 date_dict["date"] = _date
+                print(_date.strftime("%Y%V"))
+                print(reserved_week_list)
+                if _date.strftime("%Y%V") in reserved_week_list:
+                    date_dict["quota"] = False
+                else:
+                    date_dict["quota"] = True
+                date_dict["week"] = _date.strftime("%Y%V")
                 all_dates_list.append(date_dict) 
                 booking_flag = True
         if booking_flag == False: 
             date_dict = {}
             date_dict["booking"] = None
             date_dict["reserved"] = None
-            date_dict["date"] = _date   
+            date_dict["date"] = _date 
+            if _date.strftime("%Y%V") in reserved_week_list:
+                date_dict["quota"] = False
+            else:
+                date_dict["quota"] = True
+            date_dict["week"] = _date.strftime("%Y%V")
             all_dates_list.append(date_dict)           
     #all_dates_list.reverse()
-    #print(len(all_dates_list))
     context = {
+        "reserved_week_list": reserved_week_list,
         "booking_list": booking_list,
         "date_list": date_list,
         "all_dates_list": all_dates_list}
@@ -52,11 +72,11 @@ def index(request):
 def manage(request, 
     resource_id = "dc4a4c07e37b4ded9f1a5c72f3bee17b", 
     date = date.today().strftime("%Y%m%d")):
-
     if request.POST:
         pass
     else:
-        resource = Resource.objects.get(id = resource_id)
+        resource = Resource.objects.get(id = resource_id) \
+            .filter(Q(deletion_date__isnull = True))
         resource_name = resource.name
         today = datetime.now()
         date_list = [today + timedelta(days = x) for x in range(14)]
@@ -70,25 +90,26 @@ def manage(request,
     
 @login_required
 def book(request):
-
     if request.POST:
         #print("user:", request.user.id)
         #print("post:", request.POST)
         user_id = request.user.id
         user = User.objects.get(id = user_id)
         resource_id = request.POST["resource"]
-        resource = Resource.objects.get(id = resource_id)
+        resource = Resource.objects.get(id = resource_id) \
+            .filter(Q(deletion_date__isnull = True))
         schedule_str = request.POST["schedule"].lower()
         schedule = Schedule.objects.filter(resource_id = resource_id) \
-            .filter(slot__contains = schedule_str)[0]
+            .filter(slot__contains = schedule_str) \
+            .filter(Q(deletion_date__isnull = True))[0]
         date = request.POST["date"]
-        status = "RECEIVED" 
+        status = "CONFIRMED" 
         comments = request.POST["comments"]
         b = Booking(
             user = user, schedule = schedule, date = date,
             status = status, comments = comments,)
         b.save()
-        return redirect(index)
+        return redirect(my_bookings)
     else:
         pass
 
@@ -96,7 +117,7 @@ def book(request):
 def my_bookings(request):
     #latest_booking_list = Booking.objects.order_by("-modification_date")[:5]
     today = datetime.now()
-    date_list = [today + timedelta(days = x) for x in range(14)]
+    date_list = [today + timedelta(days = x) for x in range(93)]
     user_id = request.user.id
     booking_list = Booking.objects.filter(user_id = user_id) \
         .filter(date__range = [date_list[0], date_list[-1]]) \

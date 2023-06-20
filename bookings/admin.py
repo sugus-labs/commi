@@ -54,9 +54,10 @@ class BookingAdmin(admin.ModelAdmin):
                 "deletion_date"]}),
     ]    
     list_display = ["user", "get_resource", "get_slot", 
-        "status", "date", "creation_date", "modification_date"]
+        "status", "date", "creation_date", "modification_date", "deletion_date"]
     list_filter = ["user", "schedule__resource__name", 
-        "schedule__slot", "status", "date", "creation_date", "modification_date"]
+        "schedule__slot", "status", "date", "creation_date", "deletion_date", 
+        "modification_date"]
 
 admin.site.register(Resource, ResourceAdmin)
 admin.site.register(Schedule, ScheduleAdmin)
