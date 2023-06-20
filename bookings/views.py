@@ -75,11 +75,10 @@ def manage(request,
     if request.POST:
         pass
     else:
-        resource = Resource.objects.get(id = resource_id) \
-            .filter(Q(deletion_date__isnull = True))
+        resource = Resource.objects.get(id = resource_id)
         resource_name = resource.name
         today = datetime.now()
-        date_list = [today + timedelta(days = x) for x in range(14)]
+        date_list = [today + timedelta(days = x) for x in range(93)]
         context = {
             "date_list": date_list,
             "selected_date": f"{date[0:4]}-{date[4:6]}-{date[6:]}",
@@ -96,8 +95,7 @@ def book(request):
         user_id = request.user.id
         user = User.objects.get(id = user_id)
         resource_id = request.POST["resource"]
-        resource = Resource.objects.get(id = resource_id) \
-            .filter(Q(deletion_date__isnull = True))
+        resource = Resource.objects.get(id = resource_id)
         schedule_str = request.POST["schedule"].lower()
         schedule = Schedule.objects.filter(resource_id = resource_id) \
             .filter(slot__contains = schedule_str) \
@@ -111,7 +109,7 @@ def book(request):
         b.save()
         return redirect(my_bookings)
     else:
-        pass
+        return redirect(my_bookings)
 
 @login_required
 def my_bookings(request):
