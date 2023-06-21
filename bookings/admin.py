@@ -47,7 +47,7 @@ class BookingAdmin(admin.ModelAdmin):
         "deletion_date"]
     fieldsets = [
         ("Information", {
-            "fields": ["user", "schedule", "status", "date"]}),
+            "fields": ["user", "schedule", "status", "date", "qr_img_url"]}),
         ("Dates", {
             "fields": [
                 "creation_date", "modification_date", 

@@ -3,6 +3,7 @@
 {% block content %} 
 
 {% load i18n %}
+{% load static %}
   <!--
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <a href="" class="btn btn-lg btn-bd-primary d-flex align-items-center justify-content-center fw-semibold">
@@ -16,7 +17,7 @@
 
     {% for element in all_dates_list %}
 
-    <div class="d-flex text-body-secondary pt-3">
+    <div class="text-body-secondary pt-3">
       {% if element.reserved == "ALL" %}
         <p class="pb-3 mb-0 lh-sm border-bottom">
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
@@ -25,9 +26,12 @@
           Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
           Recurso: <strong>{{element.booking.schedule.resource}}</strong>.<br>
           Hor.:<strong>{{element.booking.schedule.slot}}</strong><br><br>
+          <img src="/media/{{ element.booking.qr_img_url }}" class="center img-fluid" alt="qr">
           <a href="{% url 'cancel' element.booking.id %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold">
             Cancela ahora!
           </a>
+
+
         </p>     
       {% endif %}
     </div>

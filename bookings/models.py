@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from django.utils.translation import gettext_lazy as _
+import qrcode
 
 class Resource(models.Model):
     id = models.UUIDField(
@@ -109,6 +110,11 @@ class Booking(models.Model):
         verbose_name = "comments",        
         max_length = 5000, 
         null = True, blank = True)
+    qr_img_url = models.CharField(
+        help_text = "The qr path of the booking",
+        verbose_name = "qr image",  
+        max_length = 1000,         
+        null = True, blank = True)
     creation_date = models.DateTimeField(
         help_text = "The date of creation",
         verbose_name = "creation date",        
@@ -130,4 +136,11 @@ class Booking(models.Model):
         return str(self.id)
 
 #    def only_timetable(self):
-#        return self.schedule.slot.split(':')[-1]        
+#        return self.schedule.slot.split(':')[-1]      
+
+    def save(self, *args, **kwargs):
+        qr_code_img = qrcode.make(self.id)
+        qr_img_url = f"img/bookings/qr/{self.id}.png"
+        qr_code_img.save(f"media/{qr_img_url}")
+        self.qr_img_url = qr_img_url
+        super(Booking, self).save(*args, **kwargs)  

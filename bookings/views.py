@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime, date, timedelta
 from django.db.models import Q
+import qrcode
 
 status_dict = {
     "RECEIVED": "RESERVADO",
@@ -40,8 +41,8 @@ def index(request):
                 date_dict["booking"] = booking
                 date_dict["reserved"] = "ALL"
                 date_dict["date"] = _date
-                print(_date.strftime("%Y%V"))
-                print(reserved_week_list)
+                #print(_date.strftime("%Y%V"))
+                #print(reserved_week_list)
                 if _date.strftime("%Y%V") in reserved_week_list:
                     date_dict["quota"] = False
                 else:
@@ -105,7 +106,7 @@ def book(request):
         comments = request.POST["comments"]
         b = Booking(
             user = user, schedule = schedule, date = date,
-            status = status, comments = comments,)
+            status = status, comments = comments, qr_img_url = None)
         b.save()
         return redirect(my_bookings)
     else:
