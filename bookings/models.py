@@ -3,6 +3,53 @@ from django.contrib.auth.models import User
 import uuid
 from django.utils.translation import gettext_lazy as _
 import qrcode
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    building_number = models.CharField(
+        help_text = "The number of the building",
+        verbose_name = "bldg. num.",        
+        max_length = 10, 
+        null = False, blank = False)   
+    building_character = models.CharField(
+        help_text = "The name of the resource",
+        verbose_name = "bldg. char.",        
+        max_length = 10, 
+        null = False, blank = False)   
+    door_number = models.CharField(
+        help_text = "The name of the resource",
+        verbose_name = "door num.",        
+        max_length = 10, 
+        null = False, blank = False)   
+    door_character = models.CharField(
+        help_text = "The name of the resource",
+        verbose_name = "door char.",        
+        max_length = 10, 
+        null = False, blank = False)   
+    creation_date = models.DateTimeField(
+        help_text = "The date of creation",
+        verbose_name = "creation date",        
+        auto_now_add = True)
+    modification_date = models.DateTimeField(
+        help_text = "The date of the last modification",
+        verbose_name = "modification date",        
+        auto_now = True)        
+    deletion_date = models.DateTimeField(
+        help_text = "The date of deletion",
+        verbose_name = "deletion date",        
+        null = True, blank = True)   
+
+    @receiver(post_save, sender = User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user = instance)
+
+    @receiver(post_save, sender = User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 class Resource(models.Model):
     id = models.UUIDField(

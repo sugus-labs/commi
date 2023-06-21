@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Resource, Schedule, Booking
+from .models import Resource, Schedule, Booking, Profile
 
 class ResourceAdmin(admin.ModelAdmin):
     readonly_fields = [
@@ -62,3 +62,4 @@ class BookingAdmin(admin.ModelAdmin):
 admin.site.register(Resource, ResourceAdmin)
 admin.site.register(Schedule, ScheduleAdmin)
 admin.site.register(Booking, BookingAdmin)
+admin.site.register(Profile)

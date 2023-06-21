@@ -97,9 +97,9 @@ def book(request):
         user = User.objects.get(id = user_id)
         resource_id = request.POST["resource"]
         resource = Resource.objects.get(id = resource_id)
-        schedule_str = request.POST["schedule"].lower()
+        #schedule_str = request.POST["schedule"].lower()
         schedule = Schedule.objects.filter(resource_id = resource_id) \
-            .filter(slot__contains = schedule_str) \
+            .filter(slot__contains = "todo el dia") \
             .filter(Q(deletion_date__isnull = True))[0]
         date = request.POST["date"]
         status = "CONFIRMED" 

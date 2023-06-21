@@ -12,13 +12,13 @@
   </div>
   -->
 
+  {% for element in all_dates_list %}
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <!--<h5 class="border-bottom pb-2 mb-0">Calendario de reservas</h5>-->
-
-    {% for element in all_dates_list %}
-
-    <div class="text-body-secondary pt-3">
+    
       {% if element.reserved == "ALL" %}
+
+      <div class="text-body-secondary pt-3"></div>
         <p class="pb-3 mb-0 lh-sm border-bottom">
           <!--<strong class="d-block text-gray-dark">@{{element.booking.user}}</strong>-->
           Fecha: <strong>{{element.date|date:"Y-m-d" }}</strong>.<br>
@@ -26,18 +26,45 @@
           Reserva: <strong>{{element.booking.small_id}}</strong>.<br> 
           Recurso: <strong>{{element.booking.schedule.resource}}</strong>.<br>
           Hor.:<strong>{{element.booking.schedule.slot}}</strong><br><br>
-          <img src="/media/{{ element.booking.qr_img_url }}" class="center img-fluid" alt="qr">
-          <a href="{% url 'cancel' element.booking.id %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold">
+
+          <!--<img src="/media/{{ element.booking.qr_img_url }}" class="center img-fluid" alt="qr">-->
+
+          <div id = "qrcode-{{element.booking.id}}"></div>
+
+          <a href="{% url 'cancel' element.booking.id %}" class="btn btn-bd-primary d-flex align-items-center justify-content-center fw-semibold"style="margin-top: 20px;">
             Cancela ahora!
           </a>
 
-
         </p>     
+      </div>
       {% endif %}
-    </div>
-
+    
+  </div>
     {% endfor %}
 
-  </div>
 
+  
+
+  {% endblock %}
+
+  {% block script %}
+  {% for element in all_dates_list %}  
+  <script type="text/javascript">
+    var qrcode = new QRCode("qrcode-{{element.booking.id}}", {
+        text: "{{element.booking.id}}",
+        width: 600,
+        height: 600,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+
+  </script>
+
+
+
+
+  {% endfor %}
+  
   {% endblock %}
